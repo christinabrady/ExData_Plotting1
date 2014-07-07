@@ -1,6 +1,10 @@
 ### Set local system to use English (my OS default is Spanish)
 Sys.setlocale('LC_ALL', 'en_US')
 
+### install and require sql package
+install.packages("sqldf")
+library(sqldf)
+
 ### read data for 2/1/2007 and 2/2/2007 into R
 pwrdata <- read.csv2.sql("household_power_consumption-1.txt", sql = "select * from file where Date = '1/2/2007' OR Date = '2/2/2007'", sep=";", header=TRUE)
 
@@ -17,8 +21,8 @@ yrange <- range(c(sm1, sm2, sm3))
 png("plot4.png", width = 480, height = 480, bg = "white")
 par(mfrow=c(2,2))
 with(pwrdata, {
-  hist(Global_active_power, col ="red", xlab = "Global Active Power(kilowatts)", main = "Global Active Power")
-  plot(DateTime, Global_active_power, type = "l", ylab = "Global Active Power (kilowatts)", xlab = "")
+  plot(DateTime, Global_active_power, type = "l", ylab = "Global Active Power", xlab = "")
+  plot(DateTime, Voltage, type = "l", col = "black", ylab = "Voltage", xlab = "datetime")
   plot(DateTime, sm1, type = "l", col = "black", xlab = "", ylab = "Energy sub metering")
   lines(DateTime, sm2, type="l", col="red")
   lines(DateTime, sm3, type="l", col="blue")
